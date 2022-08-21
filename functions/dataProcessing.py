@@ -18,9 +18,9 @@ def getPlayers(civsList, logName):
         logger.logMsg(logging.exception("ValueError"), logName)
         getPlayers(civsList, logName)
 
-    for i in range(numPlayers):
-        player = input("Enter the name of each player one at a time.\n")
-        playerList.append(player)
+    for players in range(numPlayers):
+        playerName = input("Enter the name of each player one at a time.\n")
+        playerList.append(playerName)
 
     with open("selectedCivs.json", 'w', encoding='utf-8') as outJson:
 
