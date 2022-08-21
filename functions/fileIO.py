@@ -41,8 +41,6 @@ def openCivList(logName):
     try:
         with open(jsonFile, 'r', encoding='utf-8') as f:
             civsList = json.load(f)
-            # print(len(civsList)) debug
-            # print(type(civsList)) debug
         return civsList
     except FileNotFoundError:
         logger.logMsg(logging.exception("FileNotFoundError"), logName)
