@@ -1,19 +1,20 @@
 from functions import fileIO
 from functions import dataProcessing
+from functions import logger
 
 # Select the method in which the program will acquire the data needed
 
 
-def chooseCivMethod():
+def chooseCivMethod(logName):
     try:
         method = int(input(
             "How would you like to load your list of civs? (type an integer)\n 1. Process a txt list\n 2. Open an existing json file\n "))
         if method == 1:
             saveDict = fileIO.processCivList()
-            fileIO.saveCivList(saveDict)
+            fileIO.saveCivList(saveDict, logName)
             return saveDict
         elif method == 2:
-            civDict = fileIO.openCivList()
+            civDict = fileIO.openCivList(logName)
             return civDict
         else:
             print("Invalid Input")
@@ -26,8 +27,9 @@ def chooseCivMethod():
 
 
 def main():
-    chooseCiv = chooseCivMethod()
-    dataProcessing.getPlayers(chooseCiv)
+    log = logger.createLogFile()
+    chooseCiv = chooseCivMethod(log)
+    dataProcessing.getPlayers(chooseCiv, log)
 
 
 # Run the main function

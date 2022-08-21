@@ -1,5 +1,9 @@
+# Boiler plate to deal with file processing and fileIO.
+
 
 import json
+from functions import logger
+import logging
 
 # process a text file and create a list of civs
 
@@ -21,18 +25,26 @@ def processCivList():
 # write the civs list to a json file
 
 
-def saveCivList(dict):
+def saveCivList(dict, logName):
     with open("data.json", 'w', encoding='utf-8') as f:
         json.dump(dict, f, ensure_ascii=False, indent=4)
-        print("data.json has been saved.")
+        success = "data.json has been saved."
+        logger.logMsg(success, logName)
+        logger.printMsg(success)
 
 # open an existing civ list json file to use
 
 
-def openCivList():
+def openCivList(logName):
+    civsList = {}
     jsonFile = input("Enter the full name of the desired json file: ")
-    with open(jsonFile, 'r', encoding='utf-8') as f:
-        civsList = json.load(f)
-        # print(len(civsList)) debug
-        # print(type(civsList)) debug
-    return civsList
+    try:
+        with open(jsonFile, 'r', encoding='utf-8') as f:
+            civsList = json.load(f)
+            # print(len(civsList)) debug
+            # print(type(civsList)) debug
+        return civsList
+    except FileNotFoundError:
+        logger.logMsg(logging.exception("FileNotFoundError"), logName)
+        logger.printMsg("FileNotFoundError.\nTry a different file name")
+        openCivList(logName)
